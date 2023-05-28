@@ -1,22 +1,17 @@
-import { ROLE } from '../../constant';
 import Knex from 'knex';
-import { Role } from '../models';
+import { ROLE } from '../../constant';
 
 export async function up(knex: Knex): Promise<void> {
-  const insertRoleQuery = Role.query()
-    .insert([{ name: ROLE.CUSTOMER }, { name: ROLE.SUPER_ADMIN }])
-    .toKnexQuery()
-    .toQuery();
-
   await knex.raw(`
     CREATE TABLE role (
-      id BIGINT PRIMARY KEY DEFAULT (generate_id()),
-      name VARCHAR(255),
-      "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+      id serial PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 
-    ${insertRoleQuery}
+    INSERT into role(name)
+    VALUES ('${ROLE.CUSTOMER}'),('${ROLE.ADMIN}');
   `);
 }
 

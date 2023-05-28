@@ -10,7 +10,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { QueryParams } from 'src/base/dto/query-params.dto';
+import { QueryParams } from 'src/base/dto';
 import { IdParam } from './params';
 
 @Injectable()
@@ -24,14 +24,14 @@ export abstract class BaseControllerCRUD<T> {
   @Get()
   @UsePipes(ValidationPipe)
   getMany(@Query() query: QueryParams): Promise<{ results: T[]; total }> {
-    if (query.filter) {
-      query.filter = JSON.parse(query.filter);
-    }
-    if (query.orderBy) {
-      query.orderBy = JSON.parse(query.orderBy);
-    }
-    query.page = query.page || 1;
-    query.perPage = query.perPage || 10;
+    // if (query.filter) {
+    //   query.filter = JSON.parse(query.filter);
+    // }
+    // if (query.orderBy) {
+    //   query.orderBy = JSON.parse(query.orderBy);
+    // }
+    // query.page = query.page || 1;
+    // query.perPage = query.perPage || 10;
     return this.service.getMany(query);
   }
 

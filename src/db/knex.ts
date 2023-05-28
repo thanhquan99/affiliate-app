@@ -1,12 +1,14 @@
+import * as dotenv from 'dotenv';
+dotenv.config({ path: '../../.env' });
+console.log(process.env.DATABASE_URL);
+
 import Knex from 'knex';
 
 const config: Knex.Config = {
   client: 'pg',
   connection: {
-    ssl: { rejectUnauthorized: false },
-    connectionString:
-      process.env.DATABASE_URL ||
-      'postgres://fbwnbzeecnnwna:f06cd67dad02846b6a7f8afa89524dc37783ed85e38768124c8306932f214698@ec2-52-71-241-37.compute-1.amazonaws.com:5432/ddqgap9bi1g6pc',
+    // ssl: { rejectUnauthorized: false },
+    connectionString: process.env.DATABASE_URL,
   },
   pool: {
     min: parseInt(process.env.DB_POOL_MIN) || 5,
@@ -14,8 +16,9 @@ const config: Knex.Config = {
   },
   migrations: {
     tableName: 'knex_migrations',
-    directory: 'migrations',
+    directory: './migrations',
   },
 };
-
-export default config;
+module.exports = {
+  ...config,
+};

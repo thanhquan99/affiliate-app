@@ -1,7 +1,20 @@
 import knex from 'knex';
-import config from './knex';
 
-const knexInstance = knex(config);
+const knexInstance = knex({
+  client: 'pg',
+  connection: {
+    // ssl: { rejectUnauthorized: false },
+    connectionString: process.env.DATABASE_URL,
+  },
+  pool: {
+    min: parseInt(process.env.DB_POOL_MIN) || 5,
+    max: parseInt(process.env.DB_POOL_MAX) || 5,
+  },
+  migrations: {
+    tableName: 'knex_migrations',
+    directory: 'migrations',
+  },
+});
 
 export default knexInstance;
 

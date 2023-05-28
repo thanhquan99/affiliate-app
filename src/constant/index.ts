@@ -1,5 +1,5 @@
 export enum ROLE {
-  SUPER_ADMIN = 'super-admin',
+  ADMIN = 'admin',
   CUSTOMER = 'customer',
   OPTIONAL = 'optional',
 }
@@ -74,3 +74,18 @@ export enum TransactionStatus {
   PENDING = 'Pending',
   PAID = 'Paid',
 }
+
+export const SUBSCRIPTION = {
+  TRIAL: {
+    name: 'Trial',
+    price: 0,
+  },
+  BASIC: {
+    name: 'Basic',
+    price: 10,
+  },
+  PREMIUM: {
+    name: 'Premium',
+    price: 20,
+  },
+};

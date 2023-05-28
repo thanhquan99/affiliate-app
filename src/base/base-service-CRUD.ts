@@ -1,7 +1,7 @@
 import { QueryBuilder } from 'objection';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import BaseModel from 'src/db/models/BaseModel';
-import { knex } from 'src/db/models';
+import BaseModel from 'src/db/entities/BaseModel';
+import { knex } from 'src/db/entities';
 
 @Injectable()
 export abstract class BaseServiceCRUD<T extends BaseModel> {
