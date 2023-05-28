@@ -2,16 +2,17 @@ import Knex from 'knex';
 import { ROLE } from '../../constant';
 
 export async function up(knex: Knex): Promise<void> {
+  const now = Math.round(new Date().getTime() / 1000);
   await knex.raw(`
     CREATE TABLE role (
-      id serial PRIMARY KEY,
+      id VARCHAR(255) PRIMARY KEY DEFAULT (gen_random_uuid ()),
       name VARCHAR(255) NOT NULL,
-      created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+      created_at BIGINT NOT NULL,
+      updated_at BIGINT NOT NULL
     );
 
-    INSERT into role(name)
-    VALUES ('${ROLE.CUSTOMER}'),('${ROLE.ADMIN}');
+    INSERT into role(name,created_at,updated_at)
+    VALUES ('${ROLE.CUSTOMER}',${now}, ${now}),('${ROLE.ADMIN}', ${now}, ${now});
   `);
 }
 

@@ -1,3 +1,4 @@
+import { QueryBuilder } from 'objection';
 import BaseModel from './BaseModel';
 
 export default class Role extends BaseModel {
@@ -7,12 +8,9 @@ export default class Role extends BaseModel {
     return 'role';
   }
 
-  $beforeInsert() {
-    this.created_at = new Date().toISOString();
-    this.updated_at = new Date().toISOString();
-  }
-
-  $beforeUpdate() {
-    this.updated_at = new Date().toISOString();
-  }
+  static modifiers = {
+    defaultSelect(qb: QueryBuilder<Role>) {
+      qb.select('id', 'name');
+    },
+  };
 }

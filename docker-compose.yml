@@ -18,6 +18,8 @@ services:
     build:
       context: ./
       dockerfile: server.Dockerfile
+    volumes:
+      - ./:/usr/src/api
     depends_on:
       postgres-db:
         condition: service_healthy

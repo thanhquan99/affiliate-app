@@ -15,4 +15,4 @@ RUN yarn
 COPY . /usr/src/api
 
 # Run server
-CMD yarn knex:migrate:latest && yarn start
+CMD yarn knex:migrate:latest && yarn start:dev

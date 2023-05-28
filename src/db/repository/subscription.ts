@@ -1,22 +1,18 @@
-import Knex from 'knex';
-import Objection, { Model } from 'objection';
 import { Entity } from '..';
 import { ItemsPagination, QueryParams } from '../../base/dto';
 
 export default class Subscription {
-  private _builder: Objection.QueryBuilder<
-    Entity.Subscription,
-    Entity.Subscription[]
-  >;
+  private entity: typeof Entity.Subscription;
 
-  constructor(knex: Knex) {
-    this._builder = Entity.Subscription.query(knex);
+  constructor(entity: typeof Entity.Subscription) {
+    this.entity = entity;
   }
 
   async findAll(
     query: QueryParams,
   ): Promise<ItemsPagination<Entity.Subscription>> {
-    const objects = await this._builder
+    const objects = await this.entity
+      .query()
       .modify('defaultSelect')
       .page(query.page, query.pageSize);
     return {

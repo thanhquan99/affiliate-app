@@ -5,7 +5,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { Entity } from '../../db';
+import { Entity } from '../../../db';
 import { CreateUserDTO } from './user.dto';
 import { UserService } from './user.service';
 

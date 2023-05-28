@@ -4,8 +4,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { APP_GUARD } from '@nestjs/core';
-import { SubscriptionModule } from './api/subscription/subscription.module';
-import { UserModule } from './api/user/user.module';
+import { SubscriptionModule } from './api/client/subscription/subscription.module';
+import { UserModule } from './api/client/user/user.module';
 
 @Module({
   imports: [

@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ItemsPagination, QueryParams } from '../../base/dto';
-import { Entity, Repository } from '../../db';
-import { knex } from '../../db/entities';
+import { ItemsPagination, QueryParams } from '../../../base/dto';
+import { Entity, Repository } from '../../../db';
 
 @Injectable()
 export class SubscriptionService {
-  private _repository = new Repository.Subscription(knex);
+  private _repository = new Repository.Subscription(Entity.Subscription);
 
   async getMany(
     query: QueryParams,

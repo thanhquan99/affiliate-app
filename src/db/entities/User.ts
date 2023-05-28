@@ -15,15 +15,6 @@ export default class User extends BaseModel {
     return 'users';
   }
 
-  $beforeInsert() {
-    this.created_at = new Date().toISOString();
-    this.updated_at = new Date().toISOString();
-  }
-
-  $beforeUpdate() {
-    this.updated_at = new Date().toISOString();
-  }
-
   static get relationMappings() {
     return {
       role: {
@@ -34,12 +25,21 @@ export default class User extends BaseModel {
           to: 'role.id',
         },
       },
+      refUser: {
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: User,
+        join: {
+          from: 'users.referral_by',
+          to: 'users.id',
+        },
+      },
     };
   }
 
   static modifiers = {
     defaultSelect(qb: QueryBuilder<BaseModel>) {
       qb.select(
+        'id',
         'email',
         'affiliate_code',
         'created_at',
@@ -48,7 +48,13 @@ export default class User extends BaseModel {
         role: {
           $modify: ['defaultSelect'],
         },
+        refUser: {
+          $modify: ['selectInRef'],
+        },
       });
+    },
+    selectInRef(qb: QueryBuilder<BaseModel>) {
+      qb.select('email', 'id');
     },
   };
 }

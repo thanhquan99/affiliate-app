@@ -1,18 +1,18 @@
-import Knex from 'knex';
 import Objection from 'objection';
 import { ItemsPagination, QueryParams } from '../../base/dto';
 import { v4 as uuidv4 } from 'uuid';
 import { Entity } from '..';
 
 export default class User {
-  private _builder: Objection.QueryBuilder<Entity.User, Entity.User[]>;
+  private entity: typeof Entity.User;
 
-  constructor(knex: Knex) {
-    this._builder = Entity.User.query(knex);
+  constructor(entity: typeof Entity.User) {
+    this.entity = entity;
   }
 
   async findAll(query: QueryParams): Promise<ItemsPagination<Entity.User>> {
-    const objects = await this._builder
+    const objects = await this.entity
+      .query()
       .modify('defaultSelect')
       .page(query.page, query.pageSize);
 
@@ -29,9 +29,10 @@ export default class User {
   async findOne(
     filter: Objection.PartialModelObject<Entity.User>,
   ): Promise<Entity.User> {
-    const users = await this._builder
-      .modify('defaultSelect')
+    const users = await this.entity
+      .query()
       .where(filter)
+      .modify('defaultSelect')
       .limit(1);
 
     return users?.[0];
@@ -41,9 +42,10 @@ export default class User {
     data: Objection.PartialModelObject<Entity.User>,
   ): Promise<Entity.User> {
     const affiliate_code = uuidv4();
-    const users = await this._builder
+    const users = await this.entity
+      .query()
       .modify('defaultSelect')
-      .insert({ ...data, affiliate_code });
+      .insertAndFetch({ ...data, affiliate_code });
 
     return users;
   }

@@ -5,8 +5,8 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { ItemsPagination, QueryParams } from '../../base/dto';
-import { Entity } from '../../db';
+import { ItemsPagination, QueryParams } from '../../../base/dto';
+import { Entity } from '../../../db';
 import { SubscriptionService } from './subscription.service';
 
 @UsePipes(ValidationPipe)

@@ -3,13 +3,13 @@ import Knex from 'knex';
 export async function up(knex: Knex): Promise<void> {
   await knex.raw(`
     CREATE TABLE users (
-      id SERIAL PRIMARY KEY,
-      role_id INT NOT NULL,
+      id VARCHAR(255) PRIMARY KEY DEFAULT (gen_random_uuid ()),
+      role_id VARCHAR(255) NOT NULL,
       email VARCHAR(255) NOT NULL,
       affiliate_code VARCHAR(255) NOT NULL,
-      referral_by INT,
-      created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      referral_by VARCHAR(255),
+      created_at BIGINT NOT NULL,
+      updated_at BIGINT NOT NULL,
 
       UNIQUE(email),
       UNIQUE(affiliate_code),

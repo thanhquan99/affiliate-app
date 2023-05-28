@@ -2,9 +2,9 @@ import { Model } from 'objection';
 import knexPostgis from 'knex-postgis';
 import knex from '../connection';
 
-knex.on('query', function (queryData) {
-  console.log(queryData);
-});
+// knex.on('query', function (queryData) {
+//   console.log(queryData);
+// });
 
 Model.knex(knex);
 

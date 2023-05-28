@@ -10,8 +10,8 @@ export default class BaseModel extends Model {
   avg?: number;
 
   id: number;
-  created_at: string | Date;
-  updated_at: string | Date;
+  created_at: number;
+  updated_at: number;
 
   static queryBuilder<T extends BaseModel>(
     query,
@@ -28,6 +28,15 @@ export default class BaseModel extends Model {
       where: query.filter || {},
     });
     return builder as any as QueryBuilder<T, T[]>;
+  }
+
+  $beforeInsert() {
+    this.created_at = Math.round(new Date().getTime() / 1000);
+    this.updated_at = Math.round(new Date().getTime() / 1000);
+  }
+
+  $beforeUpdate() {
+    this.updated_at = Math.round(new Date().getTime() / 1000);
   }
 }
 

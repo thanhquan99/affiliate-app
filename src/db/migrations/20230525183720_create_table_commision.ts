@@ -3,19 +3,24 @@ import Knex from 'knex';
 export async function up(knex: Knex): Promise<void> {
   await knex.raw(`
     CREATE TABLE commission (
-      id SERIAL PRIMARY KEY,
+      id VARCHAR(255) PRIMARY KEY DEFAULT (gen_random_uuid ()),
       status VARCHAR(255) NOT NULL,
-      user_id INT NOT NULL,
-      referral_by INT NOT NULL,
+      user_id VARCHAR(255) NOT NULL,
+      referral_by VARCHAR(255) NOT NULL,
       commission NUMERIC(4,2) NOT NULL,
       modified_by INT,
-      "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      "createdAt" BIGINT NOT NULL,
+      "updatedAt" BIGINT NOT NULL,
 
       UNIQUE(user_id),
 
       CONSTRAINT fk_referral
         FOREIGN KEY(referral_by) 
+        REFERENCES users(id)
+        ON DELETE SET NULL,
+
+      CONSTRAINT fk_user
+        FOREIGN KEY(user_id) 
         REFERENCES users(id)
         ON DELETE SET NULL
     )

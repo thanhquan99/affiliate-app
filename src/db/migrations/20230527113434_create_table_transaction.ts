@@ -3,12 +3,12 @@ import Knex from 'knex';
 export async function up(knex: Knex): Promise<void> {
   await knex.raw(`
     CREATE TABLE transaction (
-      id SERIAL PRIMARY KEY,
+      id VARCHAR(255) PRIMARY KEY DEFAULT (gen_random_uuid ()),
       status VARCHAR(255) NOT NULL,
-      user_id INT NOT NULL,
+      user_id VARCHAR(255) NOT NULL,
       subscription JSONB NOT NULL,
-      created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      created_at BIGINT NOT NULL,
+      updated_at BIGINT NOT NULL,
 
       CONSTRAINT fk_user
         FOREIGN KEY(user_id) 

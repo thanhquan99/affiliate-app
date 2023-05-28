@@ -3,11 +3,11 @@ import Knex from 'knex';
 export async function up(knex: Knex): Promise<void> {
   await knex.raw(`
     CREATE TABLE user_subscription (
-      id SERIAL PRIMARY KEY,
-      user_id INT NOT NULL,
-      subscription_id INT NOT NULL,
-      created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      id VARCHAR(255) PRIMARY KEY DEFAULT (gen_random_uuid ()),
+      user_id VARCHAR(255) NOT NULL,
+      subscription_id VARCHAR(255) NOT NULL,
+      created_at BIGINT NOT NULL,
+      updated_at BIGINT NOT NULL,
 
       UNIQUE(user_id),
 
