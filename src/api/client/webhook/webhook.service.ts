@@ -6,21 +6,20 @@ import {
   TRANSACTION_TYPE,
 } from '../../../constant';
 import { Entity, Repository } from '../../../db';
+import commissionRepository from '../../../service/client/repository/commission';
+import subscriptionRepository from '../../../service/client/repository/subscription';
+import transactionRepository from '../../../service/client/repository/transaction';
+import userRepository from '../../../service/client/repository/user';
+import userSubscriptionRepository from '../../../service/client/repository/user-subscription';
 import { HandleEventDTO } from './webhook.dto';
 
 @Injectable()
 export class WebhookService {
-  private _subscription_repository = new Repository.Subscription(
-    Entity.Subscription,
-  );
-  private _transaction_repository = new Repository.Transaction(
-    Entity.Transaction,
-  );
-  private _user_repository = new Repository.User(Entity.User);
-  private _commission_repository = new Repository.Commission(Entity.Commission);
-  private _user_subscription_repository = new Repository.UserSubscription(
-    Entity.UserSubscription,
-  );
+  private _subscription_repository = subscriptionRepository;
+  private _transaction_repository = transactionRepository;
+  private _user_repository = userRepository;
+  private _commission_repository = commissionRepository;
+  private _user_subscription_repository = userSubscriptionRepository;
 
   async handleEvents(payload: HandleEventDTO): Promise<void> {
     const { status } = payload;

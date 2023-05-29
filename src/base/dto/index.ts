@@ -4,11 +4,6 @@ import { IsNumberString, IsOptional, IsString } from 'class-validator';
 export class QueryParams {
   @ApiPropertyOptional()
   @IsOptional()
-  @IsString()
-  orderBy?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
   @IsNumberString()
   page?: number;
 

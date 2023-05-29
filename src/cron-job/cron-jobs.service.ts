@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { Entity, Repository } from '../db';
 import { CommissionService } from '../api/client/commission/commission.service';
+import commissionRepository from '../service/client/repository/commission';
+import userSubscriptionRepository from '../service/client/repository/user-subscription';
 
 @Injectable()
 export class CronJobsService {
-  private _commission_repository = new Repository.Commission(Entity.Commission);
-  private _user_subscription_repository = new Repository.UserSubscription(
-    Entity.UserSubscription,
-  );
+  private _commission_repository = commissionRepository;
+  private _user_subscription_repository = userSubscriptionRepository;
   private commissionService = new CommissionService();
 
   @Cron('0 */10 * * * *') // every 10 minutes

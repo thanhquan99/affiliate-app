@@ -12,15 +12,17 @@ export default class Subscription {
   async findAll(
     query: QueryParams,
   ): Promise<ItemsPagination<Entity.Subscription>> {
+    const { page = 1, pageSize = 10 } = query;
     const objects = await this.entity
       .query()
       .modify('defaultSelect')
-      .page(query.page, query.pageSize);
+      .page(page - 1, pageSize);
+
     return {
       data: objects.results,
       pagination: {
-        currentPage: query?.page || 1,
-        pageSize: query?.pageSize || 10,
+        currentPage: page,
+        pageSize: pageSize,
         totalItems: objects.total,
       },
     };

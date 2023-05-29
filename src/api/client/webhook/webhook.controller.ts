@@ -5,9 +5,11 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { HandleEventDTO } from './webhook.dto';
 import { WebhookService } from './webhook.service';
 
+@ApiTags('Webhook')
 @UsePipes(ValidationPipe)
 @Controller('webhook')
 export class WebhookController {

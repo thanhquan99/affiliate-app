@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { TRANSACTION_STATUS, TRANSACTION_TYPE } from '../../../constant';
-import { Entity, Repository } from '../../../db';
+import { Entity } from '../../../db';
+import transactionRepository from '../../../service/client/repository/transaction';
 
 @Injectable()
 export class TransactionService {
-  private _transaction_repository = new Repository.Transaction(
-    Entity.Transaction,
-  );
+  private _transaction_repository = transactionRepository;
+
   async triggerProcessPayout(commission: Entity.Commission) {
     // Handle payout to referral user
     const payoutTransaction = await this._transaction_repository.insertOne({

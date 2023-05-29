@@ -9,6 +9,8 @@ import { UserModule } from './api/client/user/user.module';
 import { WebhookModule } from './api/client/webhook/webhook.module';
 import { CommissionModule } from './api/client/commission/commission.module';
 import { TransactionModule } from './api/client/transaction/transaction.module';
+import { AdminUserModule } from './api/admin/admin-user/admin-user.module';
+import { AdminCommissionModule } from './api/admin/admin-commission/admin-commission.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { TransactionModule } from './api/client/transaction/transaction.module';
     WebhookModule,
     CommissionModule,
     TransactionModule,
+    AdminUserModule,
+    AdminCommissionModule,
   ],
   providers: [
     {

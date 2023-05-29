@@ -2,6 +2,7 @@ import Objection from 'objection';
 import { ItemsPagination, QueryParams } from '../../base/dto';
 import { v4 as uuidv4 } from 'uuid';
 import { Entity } from '..';
+import { COMMISSION_STATUS } from '../../constant';
 
 export default class User {
   private entity: typeof Entity.User;
@@ -11,16 +12,17 @@ export default class User {
   }
 
   async findAll(query: QueryParams): Promise<ItemsPagination<Entity.User>> {
+    const { page = 1, pageSize = 10 } = query;
     const objects = await this.entity
       .query()
       .modify('defaultSelect')
-      .page(query.page, query.pageSize);
+      .page(page - 1, pageSize);
 
     return {
       data: objects.results,
       pagination: {
-        currentPage: query?.page || 1,
-        pageSize: query?.pageSize || 10,
+        currentPage: page,
+        pageSize: pageSize,
         totalItems: objects.total,
       },
     };
@@ -48,5 +50,53 @@ export default class User {
       .insertAndFetch({ ...data, affiliate_code });
 
     return users;
+  }
+
+  async findUserConversions(
+    userId: string,
+    query: QueryParams,
+  ): Promise<ItemsPagination<Entity.User>> {
+    const { page = 1, pageSize = 10 } = query;
+
+    const getCommissionOfUser = Entity.Commission.query()
+      .select('user_id')
+      .where({ referral_by: userId });
+
+    const objects = await this.entity
+      .query()
+      .whereIn('id', getCommissionOfUser)
+      .modify('selectInConversion')
+      .page(page - 1, pageSize);
+
+    return {
+      data: objects.results,
+      pagination: {
+        currentPage: page,
+        pageSize: pageSize,
+        totalItems: objects.total,
+      },
+    };
+  }
+
+  async findUserReferrals(
+    userId: string,
+    query: QueryParams,
+  ): Promise<ItemsPagination<Entity.User>> {
+    const { page = 1, pageSize = 10 } = query;
+
+    const objects = await this.entity
+      .query()
+      .where({ referral_by: userId })
+      .modify('defaultSelect')
+      .page(page - 1, pageSize);
+
+    return {
+      data: objects.results,
+      pagination: {
+        currentPage: page,
+        pageSize: pageSize,
+        totalItems: objects.total,
+      },
+    };
   }
 }

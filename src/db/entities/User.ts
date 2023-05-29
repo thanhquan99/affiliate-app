@@ -1,6 +1,7 @@
 import { QueryBuilder } from 'objection';
 import Role from './Role';
 import BaseModel from './BaseModel';
+import Commission from './Commission';
 
 export default class User extends BaseModel {
   role_id: string;
@@ -33,6 +34,14 @@ export default class User extends BaseModel {
           to: 'users.id',
         },
       },
+      commission: {
+        relation: BaseModel.HasOneRelation,
+        modelClass: Commission,
+        join: {
+          from: 'users.id',
+          to: 'commission.user_id',
+        },
+      },
     };
   }
 
@@ -56,6 +65,14 @@ export default class User extends BaseModel {
     },
     selectInRef(qb: QueryBuilder<BaseModel>) {
       qb.select('email', 'id');
+    },
+    selectInConversion(qb: QueryBuilder<BaseModel>) {
+      qb.select('*').withGraphFetched({
+        role: {
+          $modify: ['defaultSelect'],
+        },
+        commission: true,
+      });
     },
   };
 }

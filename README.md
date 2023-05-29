@@ -1,4 +1,14 @@
-## Installation
+## Dev
+Install docker
+
+Run app with docker
+```bash
+$ yarn start:docker
+```
+
+Link swagger: localhost:3000/docs
+
+<!-- ## Installation
 
 ```bash
 $ npm install
@@ -36,9 +46,9 @@ $ npm run test:cov
 ```
 
 ## Create a task to src
-npx @nestjs/cli g module transaction
-npx @nestjs/cli g controller transaction --no-spec
-npx @nestjs/cli g service transaction --no-spec
+npx @nestjs/cli g module admin-commission
+npx @nestjs/cli g controller admin-commission --no-spec
+npx @nestjs/cli g service admin-commission --no-spec
 
 ## Create migration file
 npx typeorm migration:create -n fileName -d src/migrations
@@ -46,4 +56,4 @@ npx typeorm migration:create -n fileName -d src/migrations
 ## Query
 orderBy = {"id": "ASC", "name":"DESC"}
 page = 1
-perPage = 10
+perPage = 10 -->
