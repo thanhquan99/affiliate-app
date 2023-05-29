@@ -6,7 +6,9 @@ export async function up(knex: Knex): Promise<void> {
       id VARCHAR(255) PRIMARY KEY DEFAULT (gen_random_uuid ()),
       status VARCHAR(255) NOT NULL,
       user_id VARCHAR(255) NOT NULL,
-      subscription JSONB NOT NULL,
+      cost NUMERIC(4,2) NOT NULL,
+      type VARCHAR(255) NOT NULL,
+      subscription JSONB,
       created_at BIGINT NOT NULL,
       updated_at BIGINT NOT NULL,
 

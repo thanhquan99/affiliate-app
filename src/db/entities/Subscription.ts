@@ -3,7 +3,7 @@ import BaseModel from './BaseModel';
 
 export default class Subscription extends BaseModel {
   name: string;
-  price: string;
+  price: number;
 
   static get tableName(): string {
     return 'subscription';

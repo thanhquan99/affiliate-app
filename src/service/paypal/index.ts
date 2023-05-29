@@ -3,7 +3,7 @@ import {
   BadRequestException,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { TransactionStatus } from '../../constant';
+import { TRANSACTION_STATUS } from '../../constant';
 
 class PaypalService {
   readonly clientId: string;

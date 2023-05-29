@@ -9,7 +9,7 @@ export default class BaseModel extends Model {
   max?: number;
   avg?: number;
 
-  id: number;
+  id: string;
   created_at: number;
   updated_at: number;
 

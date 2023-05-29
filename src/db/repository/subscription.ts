@@ -1,3 +1,4 @@
+import Objection from 'objection';
 import { Entity } from '..';
 import { ItemsPagination, QueryParams } from '../../base/dto';
 
@@ -23,5 +24,13 @@ export default class Subscription {
         totalItems: objects.total,
       },
     };
+  }
+
+  async findOne(
+    filter: Objection.PartialModelObject<Entity.Subscription>,
+  ): Promise<Entity.Subscription> {
+    const objects = await this.entity.query().where(filter).limit(1);
+
+    return objects?.[0];
   }
 }

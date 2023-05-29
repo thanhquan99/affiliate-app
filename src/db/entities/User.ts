@@ -3,10 +3,10 @@ import Role from './Role';
 import BaseModel from './BaseModel';
 
 export default class User extends BaseModel {
-  role_id: number;
+  role_id: string;
   email: string;
   affiliate_code: string;
-  referral_by?: number;
+  referral_by?: string;
 
   // Relation field
   role?: Partial<Role>;
@@ -44,6 +44,7 @@ export default class User extends BaseModel {
         'affiliate_code',
         'created_at',
         'updated_at',
+        'referral_by',
       ).withGraphFetched({
         role: {
           $modify: ['defaultSelect'],

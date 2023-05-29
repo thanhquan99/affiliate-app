@@ -6,6 +6,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { APP_GUARD } from '@nestjs/core';
 import { SubscriptionModule } from './api/client/subscription/subscription.module';
 import { UserModule } from './api/client/user/user.module';
+import { WebhookModule } from './api/client/webhook/webhook.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UserModule } from './api/client/user/user.module';
     CronJobsModule,
     SubscriptionModule,
     UserModule,
+    WebhookModule,
   ],
   providers: [
     {

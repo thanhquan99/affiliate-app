@@ -9,8 +9,8 @@ export async function up(knex: Knex): Promise<void> {
       referral_by VARCHAR(255) NOT NULL,
       commission NUMERIC(4,2) NOT NULL,
       modified_by INT,
-      "createdAt" BIGINT NOT NULL,
-      "updatedAt" BIGINT NOT NULL,
+      created_at BIGINT NOT NULL,
+      updated_at BIGINT NOT NULL,
 
       UNIQUE(user_id),
 
