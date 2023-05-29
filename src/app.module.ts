@@ -7,6 +7,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { SubscriptionModule } from './api/client/subscription/subscription.module';
 import { UserModule } from './api/client/user/user.module';
 import { WebhookModule } from './api/client/webhook/webhook.module';
+import { CommissionModule } from './api/client/commission/commission.module';
+import { TransactionModule } from './api/client/transaction/transaction.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { WebhookModule } from './api/client/webhook/webhook.module';
     SubscriptionModule,
     UserModule,
     WebhookModule,
+    CommissionModule,
+    TransactionModule,
   ],
   providers: [
     {

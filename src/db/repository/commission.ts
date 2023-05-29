@@ -1,5 +1,6 @@
 import Objection from 'objection';
 import { Entity } from '..';
+import { COMMISSION_STATUS } from '../../constant';
 
 export default class Commission {
   private entity: typeof Entity.Commission;
@@ -37,5 +38,13 @@ export default class Commission {
       .modify('defaultSelect');
 
     return object;
+  }
+
+  async findCommissionCanConvert(): Promise<Entity.Commission[]> {
+    const compareTime = Math.round(Date.now() / 1000) - 14 * 24 * 60 * 60; // 14 days
+    return await this.entity
+      .query()
+      .where('created_at', '<=', compareTime)
+      .andWhere({ status: COMMISSION_STATUS.PENDING });
   }
 }

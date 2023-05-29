@@ -9,6 +9,8 @@ export default class Transaction extends BaseModel {
   user_id: string;
   cost: number;
   subscription?: ModelFields<Entity.Subscription>;
+  // Relation field
+  user?: ModelFields<Entity.User>;
 
   static get tableName(): string {
     return 'transaction';
@@ -29,15 +31,9 @@ export default class Transaction extends BaseModel {
 
   static modifiers = {
     defaultSelect(qb: QueryBuilder<Transaction>) {
-      qb.select(
-        'id',
-        'status',
-        'type',
-        'cost',
-        'subscription',
-        'created_at',
-        'updated_at',
-      ).withGraphFetched('user');
+      qb.select('*').withGraphFetched({
+        user: true,
+      });
     },
   };
 }

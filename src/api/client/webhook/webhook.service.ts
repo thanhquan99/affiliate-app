@@ -18,6 +18,9 @@ export class WebhookService {
   );
   private _user_repository = new Repository.User(Entity.User);
   private _commission_repository = new Repository.Commission(Entity.Commission);
+  private _user_subscription_repository = new Repository.UserSubscription(
+    Entity.UserSubscription,
+  );
 
   async handleEvents(payload: HandleEventDTO): Promise<void> {
     const { status } = payload;
@@ -37,10 +40,41 @@ export class WebhookService {
 
     // Handle transaction
     await this.handleTransaction(transaction_id);
+    // Create user subscription
+    await this.handleSubscription(transaction_id);
     // Handle conversion
     await this.handleConversion(user_id);
 
     return;
+  }
+
+  private async handleSubscription(transactionId: string): Promise<void> {
+    const transaction = await this._transaction_repository.findOne({
+      id: transactionId,
+    });
+    if (!transaction) {
+      // Notify error
+      console.debug('Transaction not found');
+    }
+    if (!transaction?.subscription) {
+      // Notify error
+      console.debug('Subscription not found');
+    }
+
+    const userSubscription = await this._user_subscription_repository.findOne({
+      user_id: transaction.user_id,
+    });
+    if (!userSubscription) {
+      await this._user_subscription_repository.insertOne({
+        user_id: transaction.user_id,
+        subscription_id: transaction.subscription.id,
+      });
+      return;
+    }
+    // Update user subscription
+    await this._user_subscription_repository.updateOne(userSubscription.id, {
+      subscription_id: transaction.subscription.id,
+    });
   }
 
   private async handleTransaction(transactionId: string): Promise<void> {

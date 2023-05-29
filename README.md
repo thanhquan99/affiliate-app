@@ -36,9 +36,9 @@ $ npm run test:cov
 ```
 
 ## Create a task to src
-npx @nestjs/cli g module webhook
-npx @nestjs/cli g controller webhook --no-spec
-npx @nestjs/cli g service webhook --no-spec
+npx @nestjs/cli g module transaction
+npx @nestjs/cli g controller transaction --no-spec
+npx @nestjs/cli g service transaction --no-spec
 
 ## Create migration file
 npx typeorm migration:create -n fileName -d src/migrations

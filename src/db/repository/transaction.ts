@@ -23,7 +23,11 @@ export default class Transaction {
   async findOne(
     filter: Objection.PartialModelObject<Entity.Transaction>,
   ): Promise<Entity.Transaction> {
-    const objects = await this.entity.query().where(filter).limit(1);
+    const objects = await this.entity
+      .query()
+      .modify('defaultSelect')
+      .where(filter)
+      .limit(1);
 
     return objects?.[0];
   }
